@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" > </script>
+
+<!--            CSS STYLING PART            --> 
+<link rel="stylesheet" href="assets/css/style-users.css">
+</head>
+
+<!--            HTML PART            -->
+<body>
+<h2 style="text-align:center">List of Students</h2>
+
+<button type="button" id="home_btn" class="button">Home</button>
+<br>
+<br>
+<div class="inputs" align="center">
+	<label for="rollnumber1" style="margin :0% 1%" >From</label>
+    <input type="text" placeholder="Enter Roll Number 1" name="rollnumber1" id="rollno_1" required>
+    <label for="rollnumber2" style="margin :0% 1%">To</label>
+    <input type="text" placeholder="Enter Roll Number 2" name="rollnumber2" id="rollno_2" required>
+	
+	<select id = "sort_menu">
+	  <option value="roll_no" selected>Roll Number</option>
+	  <option value="name">Name</option>
+	  <option value="dob">DOB</option>
+	  <option value="marks">Marks</option>
+	</select>
+	<button type="button" id="submit_btn" class="button">Submit</button>
+</div>  
+<br>
+
+<!--
+<div id="user_profile" class="card">
+	<div id=image class="image" align="right">
+	  <img src = "images/sample.jpg" id="user_image" width=100 height=100 align="left">
+  </div>
+  <div id = "details" class = "details" align="left">
+  	<label for="username">Username : Sravya</label><br>
+  	<label id="rollNumber">RollNumber : IMT2015014</label><br>
+  	<label id="dob">DOB : 11-06-1997</label><br>
+  	<label id="marks">Marks : 100</label><br>
+  	<label class="grade">Grade : A</label><br>		
+  </div>
+</div>
+-->
+<script src="assets/js/users_actions.js"></script>
+</body>
+</html>

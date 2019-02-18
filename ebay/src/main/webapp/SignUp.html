@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" > </script>
+<link rel="stylesheet" href="assets/css/style-signup.css">
+</head>
+<body>
+
+<form action='webapi/myresource/createUser' style="border:1px solid #ccc" id ="form_data" method='POST' enctype="multipart/form-data">
+  <div class="container">
+    <h1>Sign Up</h1>
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+
+    <label for="rollnumber"><b>Roll Number</b></label>
+    <input type="text" placeholder="Enter Roll Number" name="rollnumber" id="rollno" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="password" name="psw" required>
+
+    <label for="name"><b>Name</b></label>
+    <input type="text" placeholder="Name" name="name" id ="name" required>
+    
+    <label for="dob"><b>DOB</b></label>
+    <input type="date" placeholder="dd/mm/yyyy" name="dob" id="dob" required>
+    
+    <label for="marks"><b>Marks</b></label>
+    <input type="number" placeholder="Enter marks" name="marks" id="marks" required>
+
+    <br>
+    </br>
+    <br>
+	<label for="image"><b>Image</b></label>   
+    <input id="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" name="path"/>
+	<img id="file-upload-image" src="#" alt="your image"/>
+	</br>
+    <div class="clearfix">
+      <button type="button" class="cancelbtn" id="cancel_btn">Cancel</button>
+      <button type="submit" class="signupbtn" id="signup_btn">Sign Up</button>
+    </div>
+    
+  </div>
+</form>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+	$("#file-upload-image").hide();
+});
+
+function readURL(input) {
+	  if (input.files && input.files[0]) {
+
+	    var reader = new FileReader();
+
+	    reader.onload = function(e) {
+	      $('#file-upload-image').attr('src', e.target.result);
+	    };
+
+	    reader.readAsDataURL(input.files[0]);
+
+	  }
+}
+</script>
+<!-- 
+<script type="text/javascript">
+	$("#signup_btn").click(function(event){
+		
+		var form = $('#form_data').val();
+		var data = new FormData(form);
+
+		$.ajax({url:"http://localhost:8080/ebay/webapi/myresource/createUser", type:"POST",
+			enctype : 'multipart/form-data',
+			data: data,
+		 	async: true,
+		 	
+			success: function(data) {
+				
+				if(data.result=="success"){
+					sessionStorage.setItem("email",$("#email").val());
+					window.location = "userDetails.html";
+			   }
+				else{
+					alert("failed");
+				}
+			},
+			error: function(data) {
+				alert("failed");
+			}
+		 	
+			});
+	});
+</script>
+ -->
+</body>
+</html>

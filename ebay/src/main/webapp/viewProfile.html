@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" > </script>
+
+<style>
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  text-align: center;
+  font-family: arial;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: blue;
+  text-align: center;
+  cursor: pointer;
+  width: 30%;
+  font-size: 10px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 1px;
+  padding: 10px;
+  margin-top:-600px ;
+  margin-left: 1000px;
+}
+
+.darker {
+  border-color: #80808069;
+  border-style: groove;
+  background-color: white;
+}
+
+
+</style>
+</head>
+<body>
+
+
+
+<h2 style="text-align:left">User Details</h2>
+
+<div class="card" id="user_profile">
+  <img alt = "John" style="width:100%" id="user_image">
+  <h2 id="username">Hi</h2>
+  <h2 id="rollNumber"></h2>
+  <h3 id="dob">10</h3>
+  <h4 id="marks"></h4>
+  <h5 id="grade"></h5>
+  <button id="update_btn">Update Details</button>
+  <button id="search_btn">Search Users</button>
+  <button id="logout_btn">Log out</button>
+</div>
+
+<div class="container" id="msgs">
+	<h3>Messages</h3>
+	<button style="background-color:green;width:14%; padding:7px;margin-top:-40px;margin-right:200px" id="reload_btn">reload</button>
+<!-- <div class="darker" >
+  		<p id="sender" style="color:blue">From: Pranith<p>
+  		<p id="msg">Hey! I'm fine. Thanks for asking!</p>
+  	</div>
+	<div class="darker">
+  		<p id="sender" style="color:blue">From: Pranith<p>
+  		<p id="msg">Hey! I'm fine. Thanks for asking!</p>
+	</div>   -->	
+</div>
+<button class="open-button" id="msg_btn">Send Message</button>
+
+<div class="form-popup" id="myForm">
+
+  <form action='myForm' class="form-container">
+  
+  	<button type="button" id="close" style="float: right;">X</button>
+    <h1>Send Message</h1>
+	
+    <label for="to"><b>To</b></label>
+    <input type="text" onfocus="this.value=''"placeholder="Roll Number of the receiver" name="to" id="r_roll_no" required>
+
+    <textarea for="message" onfocus="this.value=''"rows="10" cols = "30" placeholder="Enter the message here" id="message" ></textarea>
+	<button type="button" id = "send" >Send</button>
+	
+  </form>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+function recieveMsgs(){
+	var  req_data= {
+			roll_no 	: sessionStorage.getItem("rollNumber"),
+	};
+	$.ajax({url:"http://localhost:8080/ebay/webapi/myresource/retrieveMsg", type:"POST",
+			data: JSON.stringify(req_data),
+			dataType: "json",
+			async: true,
+			success: function(data) {
+				if(data.result=="success"){
+					var msgs_list = data.msgs;
+					$('.darker').remove();
+					for(var i=0;i<msgs_list.length;i++)
+					{
+						var msg;
+						if(msgs_list[i].dir=="recieved")
+						{
+						
+							msg= "<div class='darker'> <p id='sender' style='color:blue'>From: "+
+								 msgs_list[i].name+"<p>"+
+								 "<p id='msg'>"+
+								 msgs_list[i].message +
+								 "</p> </div>";
+						}
+						else
+						{
+							msg= "<div class='darker'> <p id='sender' style='color:green'>Sent To: "+
+							 msgs_list[i].name+"<p>"+
+							 "<p id='msg'>"+
+							 msgs_list[i].message +
+							 "</p> </div>";
+						}
+						
+						$("#msgs").append(msg);
+					console.log(msgs_list[i].message);		
+					}
+				}
+				else{
+					alert("Data could not be found");
+				}
+			},
+			error: function(data) {
+				alert("failed");
+			}
+		});
+}
+	jQuery(document).ready(function($){
+		$("#user_profile").hide();
+		recieveMsgs();
+		var  data= {
+				roll_no 	: sessionStorage.getItem("rollNumber"),
+		};
+		
+			$.ajax({url:"http://localhost:8080/ebay/webapi/myresource/userInfo", type:"POST",
+			data: JSON.stringify(data),
+			dataType: "json",
+		 	async: true,
+		 	
+			success: function(data) {
+				
+				if(data.result=="success"){
+					
+					$("#rollNumber").text("Roll Number : " + data.roll_no);
+					$("#username").text("Name : "+data.name);
+					$("#dob").text("DOB : " + data.dob);
+					$("#user_image").attr("src",data.pic_location);
+					$("#marks").text("Marks : "+data.marks);
+					$("#grade").text("Grade : "+data.grade);
+					$("#user_profile").show();   
+			}
+				else{
+					alert("failed");
+				}
+			},
+			error: function(data) {
+				alert("failed");
+			}
+		 	
+			});
+		
+		window.setInterval(function(){
+			recieveMsgs();
+		},5000);
+		$("#update_btn").click(function(event){
+			window.location = "http://localhost:8080/ebay/editProfile.html";
+		});
+		$("#logout_btn").click(function(event){
+			window.location = "http://localhost:8080/ebay/login.html";
+		});
+
+	});
+</script>
+<script src="assets/js/load-messages.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" > </script>
+<link rel="stylesheet" href="assets/css/style-profile.css">
+</head>
+<body>
+
+
+<div id="loader"></div>
+<div id="profile">
+<h2 style="text-align:center">Student Details</h2>
+
+<div  id="user_profile">
+  <img alt = "John" style="width:25%" id="user_image">
+	<div>
+		<button type="button" style="background-color: grey; width:6%" id="pic_btn">change picture</button>
+		<form id="myform" enctype="multipart/form-data">
+			<input type="file" id ="my_file" name="upload_file">
+			<input type="button" value="submit"id="submit_btn" style="cursor: pointer;width:4%;background-color: green; color:white">
+ 		</form>
+ 	</div>
+  <h2 id="roll_no"></h2>
+  <div>
+  	<label for="name">Name </label>
+  	<input id="name"  type="text" disabled>
+  	<button id="editName" style="background-color: blue" type="button">Edit</button>
+  	</div>
+  
+  <h4 id="dob">10</h4>
+  
+  <label>Marks</label>
+  <input id="marks" placeholder="0" type="text"  disabled>
+  <button id="editMarks" style="background-color: blue"type="button">Edit</button>
+  <h5 id="grade"></h5>
+  <button id="msg_btn" style="background-color: grey;width:10%" type="button">Send Message</button>
+</div>
+</div>
+
+
+<script src="assets/js/load-profile.js"></script>
+<script src="assets/js/actions.js"></script>
+</body>
+</html>
