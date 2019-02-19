@@ -67,6 +67,25 @@ public class MyResource {
    		return "fail";
     	
 	}
+	
+	@Path("deleteUser")
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public String deleteUser(String request) throws Exception{
+      
+    	JSONObject user_data = new JSONObject(request);
+    	String roll_no = user_data.getString("roll_no");
+    	
+    	System.out.println(user_data.toString());
+    	DatabaseConnection dc = new DatabaseConnection();
+    	if(dc.deleteUser(roll_no).equals("success"))
+    	{
+    		return "success";
+    	}
+   		return "fail";
+    	
+	}
+	
 	//Get student list given two roll numbers
 			@Path("getUserList")
 			@POST
