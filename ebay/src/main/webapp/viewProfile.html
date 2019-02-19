@@ -139,6 +139,7 @@ button:hover, a:hover {
   <button id="update_btn">Update Details</button>
   <button id="search_btn">Search Users</button>
   <button id="logout_btn">Log out</button>
+  <button id="Delete" >Delete</button>
 </div>
 
 <div class="container" id="msgs">
@@ -265,6 +266,31 @@ function recieveMsgs(){
 		});
 		$("#logout_btn").click(function(event){
 			window.location = "http://localhost:8080/ebay/login.html";
+		});
+		//      Delete button  
+		$('#Delete').click( function() {
+		var delete_details = {
+
+		    roll_no : sessionStorage.getItem("rollNumber"),
+
+		};
+
+		$.ajax({
+		    url: "http://localhost:8080/ebay/webapi/myresource/deleteUser",
+		    data: JSON.stringify(delete_details),
+		    type: "POST",
+		    success: function(data) {
+
+			    if(data=="success"){
+				alert("Account successfully deleted");
+				window.location="login.html";
+			    }
+			    else	{
+				alert("Invalid Password or Roll Number");
+			    }
+			},
+
+		    });
 		});
 
 	});
