@@ -495,5 +495,49 @@ public class DatabaseConnection {
 
 		}
 		
+		// APIs to delete
+		public String deleteMessages(String roll_no)  throws Exception{
+			java.sql.PreparedStatement preparedStatement=null;
+			try {
+				int student_id = getStudent_id(roll_no);
+				//int receiver_id = sender_id;
+				query = "delete from message where (sender_id=? OR receiver_id=?)";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setInt(1, student_id);
+				preparedStatement.setInt(2, student_id);
+				
+				preparedStatement.execute();
+				return "success";
+				
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return "exception";
+		}
+		
+		
+		public String deleteUser(String roll_no) throws Exception{
+			java.sql.PreparedStatement preparedStatement = null;
+			try {
+				if(deleteMessages(roll_no)=="success") {
+					query = "delete from student where roll_no=?";
+					preparedStatement = connection.prepareStatement(query);
+					preparedStatement.setString(1, roll_no);
+					System.out.println("Roll " + roll_no);
+					preparedStatement.execute();
+					return "success";
+				}
+				else {
+					return "failed";
+				}
+			}
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+			return "exception";
+				
+		}
+		
 		
 }
